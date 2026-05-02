@@ -7,7 +7,7 @@ based on patient medical data using Support Vector Machine (SVM).
 [Click here to try the app](https://diabetes-svm-app-nvfc3ny7wmu789vpgk5iek.streamlit.app/)
 
 ## 💻 GitHub Repository
-[View full code on GitHub](https://github.com/tibebu2112/diabetes-svm-app)
+[View full code on GitHub](https://github.com/tibebu2112/diabetes-svm-app/blob/main/10kdiabetes_prediction.ipynb)
 
 ## 📌 Project Overview
 This project develops a classification model using SVM
