@@ -1,31 +1,34 @@
 # 🏥 Diabetes Prediction System using SVM
 
-A machine learning web application that predicts diabetes 
-based on patient medical data using a Support Vector Machine (SVM) classifier.
+A machine learning web application that predicts diabetes
+based on patient medical data using Support Vector Machine (SVM).
 
 ## 🔗 Live Demo
-[Click here to try the app](https://YOUR_USERNAME-diabetes-svm-app.streamlit.app)
+[Click here to try the app](https://diabetes-svm-app-nvfc3ny7wmu789vpgk5iek.streamlit.app/)
+
+## 💻 GitHub Repository
+[View full code on GitHub](https://github.com/tibebu2112/diabetes-svm-app)
 
 ## 📌 Project Overview
-This project aims to develop a classification model using 
-Support Vector Machine (SVM) to predict diabetes based on medical data.
+This project develops a classification model using SVM
+to predict diabetes based on patient medical data.
 
 ## ✅ Tasks Completed
-- **Preprocessing:** Handled missing values, normalized features, removed outliers
-- **Feature Selection:** Identified key biomarkers using ANOVA F-Score
-- **Model Training:** Trained SVM classifier with RBF kernel
-- **Model Evaluation:** Tested using Accuracy, Precision, Recall and F1 Score
-- **Deployment:** Created a user-friendly web interface for doctors
+- Preprocessing: Handled missing values, normalized features, removed outliers
+- Feature Selection: Identified key biomarkers using ANOVA F-Score
+- Model Training: Trained SVM classifier with RBF kernel
+- Model Evaluation: Accuracy, Precision, Recall and F1 Score
+- Deployment: User-friendly web interface for doctors
 
 ## 📊 Model Performance
-| Metric    | Score  |
-|-----------|--------|
-| Accuracy  | ~97%   |
-| Precision | ~95%   |
-| Recall    | ~93%   |
-| F1 Score  | ~94%   |
+| Metric    | Score |
+|-----------|-------|
+| Accuracy  | ~97%  |
+| Precision | ~95%  |
+| Recall    | ~93%  |
+| F1 Score  | ~94%  |
 
-## 🔑 Key Features (Biomarkers)
+## 🔑 Key Biomarkers
 1. Blood Glucose Level
 2. HbA1c Level
 3. BMI
@@ -35,19 +38,14 @@ Support Vector Machine (SVM) to predict diabetes based on medical data.
 
 ## 🛠️ Technologies Used
 - Python
-- Scikit-learn (SVM)
+- Scikit-learn SVM
 - Streamlit
-- Pandas, NumPy
-- Matplotlib, Seaborn
+- Pandas and NumPy
+- Matplotlib and Seaborn
 
 ## 📁 Dataset
 - 10,000 patient records
-- 9 features including gender, age, BMI, HbA1c level, blood glucose level
-- Binary classification: Diabetes / No Diabetes
-
-## 🚀 How to Run Locally
-pip install -r requirements.txt
-streamlit run app.py
+- Binary classification: Diabetes or No Diabetes
 
 ## 👨‍💻 Author
-Your Name
+Tibebu
