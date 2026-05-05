@@ -1,7 +1,6 @@
 import streamlit as st
 import numpy as np
 import joblib
-from sklearn.preprocessing import LabelEncoder
 
 st.set_page_config(
     page_title="Diabetes Prediction System",
@@ -17,15 +16,22 @@ def load_model():
 
 svm_model, scaler = load_model()
 
-smoking_options = ["No Info", "current", "ever",
-                   "former", "never", "not current"]
-le_smoking = LabelEncoder()
-le_smoking.fit(smoking_options)
+# ── FIXED: hardcoded encoding that matches exactly what
+#           LabelEncoder produced during Colab training
+#           LabelEncoder sorts alphabetically so:
+smoking_map = {
+    "No Info":     0,
+    "current":     1,
+    "ever":        2,
+    "former":      3,
+    "never":       4,
+    "not current": 5
+}
 
-# PASTE YOUR top_features list from Colab output here
 top_features = ["blood_glucose_level", "HbA1c_level", "bmi",
                 "age", "hypertension", "heart_disease"]
 
+# ── Page Title ─────────────────────────────────────────────
 st.title("🏥 Diabetes Prediction System")
 st.markdown("### Powered by Support Vector Machine (SVM)")
 st.markdown("Fill in the patient details and click **Predict**.")
@@ -46,7 +52,8 @@ with col1:
 
 with col2:
     st.subheader("Medical Measurements")
-    smoking_history     = st.selectbox("Smoking History", smoking_options)
+    smoking_history     = st.selectbox("Smoking History",
+                                       list(smoking_map.keys()))
     bmi                 = st.slider("BMI", 10.0, 100.0, 27.0, 0.1)
     HbA1c_level         = st.slider("HbA1c Level (%)", 3.5, 15.0, 5.5, 0.1)
     blood_glucose_level = st.slider("Blood Glucose (mg/dL)", 50, 400, 120)
@@ -55,8 +62,9 @@ st.divider()
 
 if st.button("🔍 Predict Diabetes", use_container_width=True, type="primary"):
 
+    # ── FIXED encoding ────────────────────────────────────
     gender_enc  = 0 if gender == "Female" else 1
-    smoking_enc = le_smoking.transform([smoking_history])[0]
+    smoking_enc = smoking_map[smoking_history]   # ← FIXED
 
     all_features = {
         "gender":              gender_enc,
@@ -89,14 +97,14 @@ if st.button("🔍 Predict Diabetes", use_container_width=True, type="primary"):
 
     with st.expander("📋 View Patient Input Summary"):
         st.write({
-            "Gender": gender,
-            "Age": age,
-            "Hypertension": "Yes" if hypertension==1 else "No",
-            "Heart Disease": "Yes" if heart_disease==1 else "No",
+            "Gender":          gender,
+            "Age":             age,
+            "Hypertension":    "Yes" if hypertension==1 else "No",
+            "Heart Disease":   "Yes" if heart_disease==1 else "No",
             "Smoking History": smoking_history,
-            "BMI": bmi,
-            "HbA1c Level": HbA1c_level,
-            "Blood Glucose": blood_glucose_level
+            "BMI":             bmi,
+            "HbA1c Level":     HbA1c_level,
+            "Blood Glucose":   blood_glucose_level
         })
 
 st.divider()
