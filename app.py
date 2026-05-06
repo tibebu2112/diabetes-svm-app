@@ -16,9 +16,6 @@ def load_model():
 
 svm_model, scaler = load_model()
 
-# ── FIXED: hardcoded encoding that matches exactly what
-#           LabelEncoder produced during Colab training
-#           LabelEncoder sorts alphabetically so:
 smoking_map = {
     "No Info":     0,
     "current":     1,
@@ -31,7 +28,6 @@ smoking_map = {
 top_features = ["blood_glucose_level", "HbA1c_level", "bmi",
                 "age", "hypertension", "heart_disease"]
 
-# ── Page Title ─────────────────────────────────────────────
 st.title("🏥 Diabetes Prediction System")
 st.markdown("### Powered by Support Vector Machine (SVM)")
 st.markdown("Fill in the patient details and click **Predict**.")
@@ -52,8 +48,7 @@ with col1:
 
 with col2:
     st.subheader("Medical Measurements")
-    smoking_history     = st.selectbox("Smoking History",
-                                       list(smoking_map.keys()))
+    smoking_history     = st.selectbox("Smoking History", list(smoking_map.keys()))
     bmi                 = st.slider("BMI", 10.0, 100.0, 27.0, 0.1)
     HbA1c_level         = st.slider("HbA1c Level (%)", 3.5, 15.0, 5.5, 0.1)
     blood_glucose_level = st.slider("Blood Glucose (mg/dL)", 50, 400, 120)
@@ -62,9 +57,8 @@ st.divider()
 
 if st.button("🔍 Predict Diabetes", use_container_width=True, type="primary"):
 
-    # ── FIXED encoding ────────────────────────────────────
     gender_enc  = 0 if gender == "Female" else 1
-    smoking_enc = smoking_map[smoking_history]   # ← FIXED
+    smoking_enc = smoking_map[smoking_history]
 
     all_features = {
         "gender":              gender_enc,
@@ -80,9 +74,10 @@ if st.button("🔍 Predict Diabetes", use_container_width=True, type="primary"):
     input_values = [[all_features[f] for f in top_features]]
     input_scaled = scaler.transform(input_values)
 
-    prediction  = svm_model.predict(input_scaled)[0]
-    probability = svm_model.predict_proba(input_scaled)[0]
-    confidence  = probability[prediction] * 100
+    # ✅ FIX: use predict_proba + 0.3 threshold instead of predict()
+    prob        = svm_model.predict_proba(input_scaled)[0][1]
+    prediction  = 1 if prob >= 0.3 else 0
+    confidence  = prob * 100 if prediction == 1 else (1 - prob) * 100
 
     st.subheader("Prediction Result")
 
